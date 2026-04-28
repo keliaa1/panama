@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowRight, Star, Hexagon, Circle, Triangle, Square, Cloud, ChevronDown, Globe, Shield, Zap, Users, BarChart, Check, MousePointer2, MessageSquare, Layout, Wallet, Quote, Mail, Phone, MapPin, Send, User } from 'lucide-react';
+import { ArrowRight, Star, Hexagon, Circle, Triangle, Square, Cloud, ChevronDown, Globe, Shield, Zap, Users, BarChart, Check, MousePointer2, MessageSquare, Layout, Wallet, Quote, Mail, Phone, MapPin, Send, User, Menu, X } from 'lucide-react';
 import panamaLogo from './assets/panamalogo.png';
 
 const translations = {
@@ -200,7 +200,9 @@ const translations = {
 };
 
 function App() {
+  const [loading, setLoading] = useState(true);
   const [langOpen, setLangOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState('EN');
   const langRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -211,6 +213,14 @@ function App() {
     { code: 'EN', label: 'English' },
     { code: 'ES', label: 'Español' },
   ];
+
+  // Loading Screen Timer
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Scroll Progress Logic
   useEffect(() => {
@@ -225,6 +235,7 @@ function App() {
 
   // Intersection Observer for Scroll Animations
   useEffect(() => {
+    if (loading) return;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -237,7 +248,7 @@ function App() {
     revealElements.forEach(el => observer.observe(el));
 
     return () => revealElements.forEach(el => observer.unobserve(el));
-  }, [selectedLang]); // Re-observe when language changes as elements might re-render
+  }, [selectedLang, loading]);
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -248,6 +259,20 @@ function App() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 z-[1000] bg-white flex flex-col items-center justify-center">
+        <div className="relative">
+          <div className="w-24 h-24 border-2 border-blue-50 border-t-blue-600 rounded-full animate-spin"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img src={panamaLogo} alt="Loading..." className="w-10 h-10 object-contain animate-pulse" />
+          </div>
+        </div>
+        <p className="mt-8 font-['Fustat'] font-bold text-gray-900 animate-pulse tracking-[0.3em] text-[10px] uppercase">Panama Company</p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-[100dvh] bg-white overflow-x-hidden overflow-y-auto selection:bg-blue-100 selection:text-blue-900 flex flex-col font-['Inter']">
@@ -261,15 +286,17 @@ function App() {
       <div className="fixed bottom-[10%] right-[-5%] w-[500px] h-[500px] bg-[#60B1FF] rounded-full blur-[120px] opacity-10 pointer-events-none mix-blend-multiply" />
 
       {/* Main Container */}
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-6 sm:px-10 pt-4 pb-12 flex flex-col h-full flex-grow">
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-4 sm:px-10 pt-4 pb-12 flex flex-col h-full flex-grow">
         
         {/* Navbar */}
-        <nav className="sticky top-[20px] z-50 mx-auto w-fit flex items-center justify-between px-5 py-2 space-x-10 bg-white/40 backdrop-blur-[30px] rounded-[18px] border border-black/5 shadow-[0_8px_32px_rgba(0,0,0,0.05),inset_0px_2px_4px_0px_rgba(255,255,255,0.4)] transition-all">
-          <div className="font-['Fustat'] font-bold text-lg text-gray-900 tracking-tight flex items-center">
+        <nav className="sticky top-[20px] z-50 mx-auto w-full md:w-fit flex items-center justify-between px-5 py-2.5 bg-white/40 backdrop-blur-[30px] rounded-[18px] md:rounded-[20px] border border-black/5 shadow-[0_8px_32px_rgba(0,0,0,0.05),inset_0px_2px_4px_0px_rgba(255,255,255,0.4)] transition-all">
+          <div className="font-['Fustat'] font-bold text-lg text-gray-900 tracking-tight flex items-center shrink-0">
             <img src={panamaLogo} alt="Panama Company" className="w-7 h-7 rounded-lg object-contain mr-2 shadow-sm" />
             Panama
           </div>
-          <div className="hidden md:flex items-center space-x-6 text-xs font-semibold text-gray-600">
+
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex items-center space-x-6 text-xs font-semibold text-gray-600 ml-10 mr-10">
             <a href="#home" className="hover:text-gray-900 transition-colors">{t.nav.home}</a>
             <a href="#about" className="hover:text-gray-900 transition-colors">{t.nav.about}</a>
             <a href="#why-choose-us" className="hover:text-gray-900 transition-colors whitespace-nowrap">{t.nav.why}</a>
@@ -278,41 +305,64 @@ function App() {
             <a href="#contact" className="hover:text-gray-900 transition-colors">{t.nav.contact}</a>
           </div>
 
-          <div className="relative" ref={langRef}>
-            <button
-              onClick={() => setLangOpen(!langOpen)}
-              className="flex items-center space-x-2 text-xs font-bold text-gray-800 bg-white/50 hover:bg-white/80 transition-all px-3 py-1.5 rounded-lg backdrop-blur-md border border-white shadow-sm"
-            >
-              <Globe size={14} className="text-blue-500" />
-              <span>{selectedLang}</span>
-              <ChevronDown size={12} className={`text-gray-400 transition-transform duration-300 ${langOpen ? 'rotate-180' : ''}`} />
-            </button>
+          <div className="flex items-center space-x-3">
+            {/* Language Selector */}
+            <div className="relative" ref={langRef}>
+              <button
+                onClick={() => setLangOpen(!langOpen)}
+                className="flex items-center space-x-2 text-xs font-bold text-gray-800 bg-white/50 hover:bg-white/80 transition-all px-3 py-1.5 rounded-lg backdrop-blur-md border border-white shadow-sm"
+              >
+                <Globe size={14} className="text-blue-500" />
+                <span className="hidden sm:inline">{selectedLang}</span>
+                <ChevronDown size={12} className={`text-gray-400 transition-transform duration-300 ${langOpen ? 'rotate-180' : ''}`} />
+              </button>
 
-            {langOpen && (
-              <div className="absolute right-0 mt-2 w-36 bg-white/90 backdrop-blur-2xl rounded-xl border border-black/5 shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => {
-                      setSelectedLang(lang.code);
-                      setLangOpen(false);
-                    }}
-                    className={`w-full text-left px-4 py-2.5 text-xs font-semibold transition-colors flex items-center justify-between ${
-                      selectedLang === lang.code ? 'bg-blue-50/50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    <span>{lang.label}</span>
-                    {selectedLang === lang.code && <Check size={12} className="text-blue-500" />}
-                  </button>
-                ))}
-              </div>
-            )}
+              {langOpen && (
+                <div className="absolute right-0 mt-2 w-36 bg-white/90 backdrop-blur-2xl rounded-xl border border-black/5 shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        setSelectedLang(lang.code);
+                        setLangOpen(false);
+                      }}
+                      className={`w-full text-left px-4 py-2.5 text-xs font-semibold transition-colors flex items-center justify-between ${
+                        selectedLang === lang.code ? 'bg-blue-50/50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'
+                      }`}
+                    >
+                      <span>{lang.label}</span>
+                      {selectedLang === lang.code && <Check size={12} className="text-blue-500" />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="md:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors bg-white/50 rounded-lg border border-white shadow-sm"
+            >
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
+
+          {/* Mobile Nav Overlay */}
+          {menuOpen && (
+            <div className="absolute top-[calc(100%+10px)] left-0 right-0 md:hidden bg-white/95 backdrop-blur-2xl rounded-2xl border border-black/5 shadow-2xl p-6 flex flex-col space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
+              <a href="#home" onClick={() => setMenuOpen(false)} className="text-sm font-bold text-gray-800 border-b border-gray-50 pb-2">{t.nav.home}</a>
+              <a href="#about" onClick={() => setMenuOpen(false)} className="text-sm font-bold text-gray-800 border-b border-gray-50 pb-2">{t.nav.about}</a>
+              <a href="#why-choose-us" onClick={() => setMenuOpen(false)} className="text-sm font-bold text-gray-800 border-b border-gray-50 pb-2">{t.nav.why}</a>
+              <a href="#pricing" onClick={() => setMenuOpen(false)} className="text-sm font-bold text-gray-800 border-b border-gray-50 pb-2">{t.nav.pricing}</a>
+              <a href="#testimonials" onClick={() => setMenuOpen(false)} className="text-sm font-bold text-gray-800 border-b border-gray-50 pb-2">{t.nav.testimonials}</a>
+              <a href="#contact" onClick={() => setMenuOpen(false)} className="text-sm font-bold text-gray-800 pb-2">{t.nav.contact}</a>
+            </div>
+          )}
         </nav>
 
         {/* Hero Section */}
-        <section id="home" className="flex flex-col lg:flex-row items-center justify-between mt-12 lg:mt-20 gap-10 lg:gap-4 mb-20 reveal reveal-up active">
-          <div className="flex-1 flex flex-col items-start w-full max-w-xl justify-center">
+        <section id="home" className="flex flex-col lg:flex-row items-center justify-between mt-12 lg:mt-20 gap-10 lg:gap-4 mb-20 reveal reveal-up active px-2">
+          <div className="flex-1 flex flex-col items-start w-full max-w-xl justify-center text-center lg:text-left items-center lg:items-start">
             <div className="flex items-center space-x-2 mb-6 bg-white/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-black/5 shadow-sm reveal reveal-left reveal-delay-1 active">
               <div className="flex -space-x-1.5">
                 {[...Array(4)].map((_, i) => (
@@ -324,7 +374,7 @@ function App() {
               <span className="text-[11px] font-bold text-gray-700">{t.hero.badge}</span>
             </div>
 
-            <h1 className="font-['Fustat'] font-bold text-4xl md:text-[54px] leading-[1.05] tracking-[-2px] text-gray-900 mb-5 reveal reveal-up reveal-delay-2 active">
+            <h1 className="font-['Fustat'] font-bold text-4xl sm:text-5xl md:text-[54px] leading-[1.1] md:leading-[1.05] tracking-[-2px] text-gray-900 mb-5 reveal reveal-up reveal-delay-2 active">
               {t.hero.title.split(',')[0]},<br /><span className="text-blue-600">{t.hero.title.split(',')[1]}</span>
             </h1>
 
@@ -332,8 +382,8 @@ function App() {
               {t.hero.subtitle}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 reveal reveal-up reveal-delay-4 active">
-              <button className="group flex items-center justify-between space-x-3 bg-gray-900 text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-black hover:scale-[1.02] transition-all duration-300 shadow-lg">
+            <div className="flex flex-col sm:flex-row items-center gap-4 reveal reveal-up reveal-delay-4 active w-full sm:w-auto">
+              <button className="w-full sm:w-auto group flex items-center justify-center space-x-3 bg-gray-900 text-white px-8 py-3.5 rounded-xl text-sm font-bold hover:bg-black hover:scale-[1.02] transition-all duration-300 shadow-lg">
                 <span>{t.hero.cta}</span>
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
@@ -343,13 +393,13 @@ function App() {
             </div>
           </div>
 
-          <div className="flex-1 relative w-full flex justify-center items-center h-[300px] lg:h-[380px] reveal reveal-scale reveal-delay-2 active">
+          <div className="flex-1 relative w-full flex justify-center items-center h-[280px] sm:h-[350px] lg:h-[380px] reveal reveal-scale reveal-delay-2 active">
             <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-              <div className="absolute w-[300px] h-[300px] bg-blue-400/10 rounded-full blur-[60px] animate-float" />
+              <div className="absolute w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] bg-blue-400/10 rounded-full blur-[60px] animate-float" />
               <video
                 src="https://future.co/images/homepage/glassy-orb/orb-purple.webm"
                 autoPlay loop muted playsInline
-                className="mix-blend-screen scale-[0.8] lg:scale-[0.85] w-full max-w-[500px] object-contain drop-shadow-[0_15px_40px_rgba(0,132,255,0.25)]"
+                className="mix-blend-screen scale-[0.85] w-full max-w-[450px] sm:max-w-[500px] object-contain drop-shadow-[0_15px_40px_rgba(0,132,255,0.25)]"
                 style={{ filter: "hue-rotate(-55deg) saturate(200%) brightness(1.2)" }}
               />
             </div>
@@ -357,15 +407,15 @@ function App() {
         </section>
 
         {/* About Us Section */}
-        <section id="about" className="py-20 relative reveal reveal-up">
+        <section id="about" className="py-20 relative reveal reveal-up px-2">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <span className="text-blue-600 font-bold text-[10px] uppercase tracking-[0.2em] mb-3 block reveal reveal-up reveal-delay-1">{t.about.badge}</span>
             <h2 className="font-['Fustat'] font-bold text-3xl md:text-[42px] leading-[1.1] tracking-[-1.5px] text-gray-900 mb-5 reveal reveal-up reveal-delay-2">
-              {t.about.title.split('solid')[0]}<br />{t.about.title.includes('solid') ? 'solid' + t.about.title.split('solid')[1] : t.about.title}
+              {t.about.title}
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[Shield, BarChart, Zap].map((Icon, idx) => (
               <div key={idx} className={`group bg-white/40 backdrop-blur-md p-8 rounded-[24px] border border-black/[0.03] hover:border-blue-500/10 hover:bg-white/70 transition-all duration-500 shadow-sm hover:shadow-xl reveal reveal-up reveal-delay-${idx + 1}`}>
                 <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
@@ -379,7 +429,7 @@ function App() {
         </section>
 
         {/* Why Choose Us Section */}
-        <section id="why-choose-us" className="py-20 relative reveal reveal-up">
+        <section id="why-choose-us" className="py-20 relative reveal reveal-up px-2">
           <div className="text-center mb-16">
             <h2 className="font-['Fustat'] font-bold text-3xl md:text-[42px] tracking-[-1.5px] text-gray-900 reveal reveal-up">
               {t.why.title.split('easy')[0]} <span className="text-blue-600">{selectedLang === 'EN' ? 'easy' : 'fácil'}</span> {t.why.title.split(selectedLang === 'EN' ? 'easy' : 'fácil')[1]}
@@ -388,7 +438,7 @@ function App() {
 
           <div className="relative max-w-4xl mx-auto px-4">
             <div className="absolute left-1/2 top-0 bottom-0 w-px border-l-2 border-dashed border-gray-100 hidden md:block -translate-x-1/2" />
-            <div className="flex flex-col space-y-16">
+            <div className="flex flex-col space-y-12 md:space-y-16">
               {[MousePointer2, MessageSquare, Layout, Wallet].map((Icon, idx) => (
                 <div key={idx} className={`flex md:justify-${idx % 2 === 0 ? 'start' : 'end'} justify-center relative reveal reveal-${idx % 2 === 0 ? 'left' : 'right'}`}>
                   <div className="w-full max-w-sm bg-white p-8 rounded-[24px] shadow-[0_15px_40px_rgba(0,0,0,0.02)] border border-black/[0.03] group hover:shadow-lg transition-all duration-500">
@@ -405,13 +455,13 @@ function App() {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="py-20">
-          <div className="mb-16 reveal reveal-left">
+        <section id="pricing" className="py-20 px-2">
+          <div className="mb-16 reveal reveal-left text-center md:text-left">
             <h2 className="font-['Fustat'] font-bold text-5xl md:text-[70px] text-gray-200 leading-tight tracking-[-3px]">{t.pricing.titleLine1}</h2>
             <h2 className="font-['Fustat'] font-bold text-5xl md:text-[70px] text-gray-900 -mt-6 tracking-[-3px]">{t.pricing.titleLine2}</h2>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {/* Card 1 */}
             <div className="bg-[#FBFBFB] rounded-[36px] p-8 md:p-12 flex flex-col justify-between border border-gray-100 shadow-sm relative overflow-hidden group hover:shadow-xl transition-all duration-700 reveal reveal-left">
               <div>
@@ -419,7 +469,7 @@ function App() {
                   <span className="font-bold text-[10px] uppercase tracking-widest text-gray-500">{t.pricing.standard.badge}</span>
                   <span className="px-2 py-0.5 rounded-full bg-red-50 text-red-500 text-[9px] font-bold uppercase tracking-wider">{t.pricing.standard.tag}</span>
                 </div>
-                <h3 className="font-['Fustat'] font-bold text-3xl md:text-[36px] leading-[1.1] mb-5 text-gray-900 tracking-tight">{t.pricing.standard.sub.split('.')[0]}.<br />{t.pricing.standard.sub.split('.')[1]}</h3>
+                <h3 className="font-['Fustat'] font-bold text-2xl sm:text-3xl md:text-[36px] leading-[1.1] mb-5 text-gray-900 tracking-tight">{t.pricing.standard.sub}</h3>
                 <div className="flex items-baseline gap-2 mb-8">
                   <span className="text-4xl font-bold text-gray-900 tracking-tight">{t.pricing.standard.price}</span>
                   <span className="text-gray-400 text-xs font-bold">{t.pricing.standard.period}</span>
@@ -436,7 +486,7 @@ function App() {
                 <button className="w-full sm:w-auto bg-gray-900 text-white px-8 py-3.5 rounded-xl text-sm font-bold hover:bg-black transition-all shadow-lg flex items-center justify-center gap-2 group">
                   {t.pricing.standard.cta} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </button>
-                <div className="flex items-center gap-3 p-3.5 bg-white rounded-2xl border border-gray-100 shadow-sm">
+                <div className="hidden sm:flex items-center gap-3 p-3.5 bg-white rounded-2xl border border-gray-100 shadow-sm">
                   <img src="https://i.pravatar.cc/40?img=32" alt="Client" className="w-8 h-8 rounded-full" />
                   <p className="text-[10px] text-gray-500 italic leading-tight font-bold">"{t.pricing.standard.testimonial}"</p>
                 </div>
@@ -451,7 +501,7 @@ function App() {
                   <span className="font-bold text-[10px] uppercase tracking-widest text-blue-400">{t.pricing.executive.badge}</span>
                   <span className="px-2 py-0.5 rounded-full bg-blue-500 text-white text-[9px] font-bold uppercase tracking-wider">{t.pricing.executive.tag}</span>
                 </div>
-                <h3 className="font-['Fustat'] font-bold text-3xl md:text-[36px] leading-[1.1] mb-5 text-white tracking-tight">{t.pricing.executive.sub.split('.')[0]}.<br />{t.pricing.executive.sub.split('.')[1]}</h3>
+                <h3 className="font-['Fustat'] font-bold text-2xl sm:text-3xl md:text-[36px] leading-[1.1] mb-5 text-white tracking-tight">{t.pricing.executive.sub}</h3>
                 <div className="flex items-baseline gap-2 mb-8">
                   <span className="text-4xl font-bold text-white tracking-tight">{t.pricing.executive.price}</span>
                   <span className="text-gray-500 text-xs font-bold">{t.pricing.executive.period}</span>
@@ -468,7 +518,7 @@ function App() {
                 <button className="w-full sm:w-auto bg-white text-gray-900 px-8 py-3.5 rounded-xl text-sm font-bold hover:bg-gray-50 transition-all shadow-xl flex items-center justify-center gap-2 group">
                   {t.pricing.executive.cta} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </button>
-                <div className="flex items-center gap-3 p-3.5 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 shadow-sm">
+                <div className="hidden sm:flex items-center gap-3 p-3.5 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 shadow-sm">
                   <img src="https://i.pravatar.cc/40?img=44" alt="Client" className="w-8 h-8 rounded-full" />
                   <p className="text-[10px] text-gray-200/50 italic leading-tight font-bold">"{t.pricing.executive.testimonial}"</p>
                 </div>
@@ -478,11 +528,11 @@ function App() {
         </section>
 
         {/* Testimonials Marquee Section */}
-        <section id="testimonials" className="py-20 overflow-hidden reveal reveal-up">
-          <div className="flex flex-col md:flex-row items-center gap-16">
+        <section id="testimonials" className="py-20 overflow-hidden reveal reveal-up px-2">
+          <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
             <div className="flex-1 text-center md:text-left reveal reveal-left">
               <span className="text-blue-600 font-bold text-[10px] uppercase tracking-[0.2em] mb-4 block">{t.testimonials.badge}</span>
-              <h2 className="font-['Fustat'] font-bold text-4xl md:text-[56px] leading-[1.1] tracking-[-2px] text-gray-900 mb-6">{t.testimonials.title.split('our')[0]}<br />{selectedLang === 'EN' ? 'our' : 'nuestros'} {t.testimonials.title.split(selectedLang === 'EN' ? 'our' : 'nuestros')[1]}</h2>
+              <h2 className="font-['Fustat'] font-bold text-4xl md:text-[56px] leading-[1.1] tracking-[-2px] text-gray-900 mb-6">{t.testimonials.title}</h2>
               <p className="text-gray-600 text-sm max-w-sm leading-relaxed mb-8">{t.testimonials.subtitle}</p>
               <div className="flex items-center gap-4 justify-center md:justify-start">
                 <div className="flex -space-x-2">
@@ -493,7 +543,7 @@ function App() {
                 <div className="text-xs font-bold text-gray-900">{t.testimonials.rated}</div>
               </div>
             </div>
-            <div className="flex-1 relative h-[450px] overflow-hidden w-full reveal reveal-right">
+            <div className="flex-1 relative h-[400px] md:h-[450px] overflow-hidden w-full reveal reveal-right">
               <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white to-transparent z-10" />
               <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent z-10" />
               <div className="animate-scroll-y flex flex-col gap-4 py-10">
@@ -515,32 +565,33 @@ function App() {
         </section>
 
         {/* Contact Us Section */}
-        <section id="contact" className="py-24 reveal reveal-up">
+        <section id="contact" className="py-24 reveal reveal-up px-2">
           <div className="text-center mb-16 reveal reveal-up">
             <h2 className="font-['Fustat'] font-bold text-4xl md:text-[48px] tracking-[-1.5px] text-gray-900 mb-4">{t.contact.title}</h2>
-            <p className="text-gray-500 text-sm font-medium">{t.contact.subtitle}</p>
+            <p className="text-gray-500 text-sm font-medium px-4">{t.contact.subtitle}</p>
           </div>
 
           <div className="flex flex-col lg:flex-row gap-12 items-start">
-            <div className="flex-1 w-full reveal reveal-left">
+            <div className="flex-1 w-full reveal reveal-left order-2 lg:order-1">
               <h3 className="font-bold text-lg text-gray-900 mb-6 uppercase tracking-wider">{t.contact.where}</h3>
-              <div className="relative w-full h-[280px] rounded-[32px] overflow-hidden border border-black/5 shadow-inner mb-8 group">
-                <img 
-                  src="https://placehold.co/800x400/f8f9ff/60b1ff?text=Panama+City+Map" 
-                  alt="Panama Map" 
-                  className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition-all duration-700"
-                />
-                <div className="absolute inset-0 bg-blue-600/5 pointer-events-none" />
-                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl border border-black/5 text-sm font-bold shadow-lg">
-                  {t.contact.city}
-                </div>
+              <div className="relative w-full h-[300px] md:h-[350px] rounded-[32px] overflow-hidden border border-black/5 shadow-2xl mb-8 group">
+                <iframe 
+                  src="https://maps.google.com/maps?q=Oceania%20Business%20Plaza,%20Panama%20City&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0, filter: 'grayscale(0.6) contrast(1.1) brightness(0.95)' }} 
+                  allowFullScreen="" 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Panama City Map"
+                  className="group-hover:grayscale-0 transition-all duration-1000"
+                ></iframe>
               </div>
 
               <div className="space-y-6">
                 <div>
                   <div className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">{t.contact.hq}</div>
-                  <div className="text-sm font-bold text-gray-900">{t.contact.address.split(',')[0]}</div>
-                  <div className="text-sm text-gray-500 font-medium tracking-tight">{t.contact.address.split(',')[1]}</div>
+                  <div className="text-sm font-bold text-gray-900">{t.contact.address}</div>
                 </div>
                 <div className="flex flex-col gap-1">
                   <a href="tel:+5071234567" className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-blue-600 transition-colors">
@@ -553,8 +604,8 @@ function App() {
               </div>
             </div>
 
-            <div className="flex-1 w-full max-w-xl reveal reveal-right">
-              <div className="bg-[#F8F9FF] p-8 md:p-10 rounded-[40px] border border-blue-50 shadow-[0_20px_50px_rgba(0,0,0,0.03)]">
+            <div className="flex-1 w-full max-w-xl reveal reveal-right order-1 lg:order-2">
+              <div className="bg-[#F8F9FF] p-6 sm:p-8 md:p-10 rounded-[40px] border border-blue-50 shadow-[0_20px_50px_rgba(0,0,0,0.03)]">
                 <form className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="relative">
@@ -588,8 +639,8 @@ function App() {
         </section>
 
         {/* Global Footer */}
-        <footer className="mt-24 pt-20 pb-10 border-t border-gray-100 reveal reveal-up">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+        <footer className="mt-24 pt-20 pb-10 border-t border-gray-100 reveal reveal-up px-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
             <div className="lg:col-span-1 reveal reveal-left">
               <div className="font-['Fustat'] font-bold text-xl text-gray-900 mb-6 flex items-center">
                 <img src={panamaLogo} alt="Logo" className="w-8 h-8 mr-2" />
@@ -609,7 +660,7 @@ function App() {
 
             <div className="reveal reveal-up reveal-delay-1">
               <h4 className="font-bold text-xs uppercase tracking-widest text-gray-900 mb-8">{t.footer.cols.pages.title}</h4>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 {t.footer.cols.pages.items.map((link) => (
                   <li key={link}>
                     <a href={`#${link.toLowerCase().replace(/\s+/g, '-')}`} className="text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors">{link}</a>
@@ -620,7 +671,7 @@ function App() {
 
             <div className="reveal reveal-up reveal-delay-2">
               <h4 className="font-bold text-xs uppercase tracking-widest text-gray-900 mb-8">{t.footer.cols.resources.title}</h4>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 {t.footer.cols.resources.items.map((link) => (
                   <li key={link}>
                     <a href="#" className="text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors">{link}</a>
@@ -631,7 +682,7 @@ function App() {
 
             <div className="reveal reveal-up reveal-delay-3">
               <h4 className="font-bold text-xs uppercase tracking-widest text-gray-900 mb-8">{t.footer.cols.legal.title}</h4>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 {t.footer.cols.legal.items.map((link) => (
                   <li key={link}>
                     <a href="#" className="text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors">{link}</a>
@@ -642,7 +693,7 @@ function App() {
           </div>
 
           <div className="text-center border-t border-gray-50 pt-10 reveal reveal-up reveal-delay-4">
-            <p className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] px-4">
               {t.footer.copy}
             </p>
           </div>
