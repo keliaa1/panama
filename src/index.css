@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+@theme {
+  --font-fustat: "Fustat", sans-serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes scroll-y {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+.animate-scroll-y {
+  animation: scroll-y 20s linear infinite;
+}
+
+.animate-scroll-y:hover {
+  animation-play-state: paused;
+}
+
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(to right, #60B1FF, #319AFF);
+  z-index: 100;
+  transition: width 0.1s ease-out;
+}
+
+/* Reveal on Scroll */
+.reveal {
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal-up {
+  transform: translateY(40px);
+}
+
+.reveal-left {
+  transform: translateX(-40px);
+}
+
+.reveal-right {
+  transform: translateX(40px);
+}
+
+.reveal-scale {
+  transform: scale(0.95);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translate(0) scale(1);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
