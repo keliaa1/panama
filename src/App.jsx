@@ -498,7 +498,7 @@ function App() {
           <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-100/30 rounded-full blur-[100px] pointer-events-none" />
           <div className="mb-16 reveal reveal-left text-center md:text-left flex flex-col md:flex-row items-end justify-between gap-6">
             <div>
-              <h2 className="font-['Fustat'] font-bold text-5xl md:text-[60px] text-gray-200 leading-tight tracking-[-3px] uppercase">{t.pricing.titleLine1}</h2>
+              <h2 className="font-['Fustat'] font-bold text-5xl md:text-[60px] text-gray-900 leading-tight tracking-[-3px] uppercase">{t.pricing.titleLine1}</h2>
               <h2 className="font-['Fustat'] font-bold text-5xl md:text-[60px] text-gray-900 -mt-6 tracking-[-3px] uppercase">{t.pricing.titleLine2}</h2>
             </div>
             <p className="text-gray-400 text-xs font-bold max-w-[200px] text-left md:text-right mb-4">Transparent offshore solutions with zero hidden costs.</p>
@@ -752,33 +752,33 @@ function App() {
               </p>
               <div className="flex gap-4">
                 {[
-                  { 
+                  {
                     Icon: (props) => (
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                       </svg>
-                    ), 
-                    link: 'https://www.instagram.com/panamacompanyok' 
+                    ),
+                    link: 'https://www.instagram.com/panamacompanyok'
                   },
-                  { 
+                  {
                     Icon: (props) => (
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
                         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                         <rect x="2" y="9" width="4" height="12"></rect>
                         <circle cx="4" cy="4" r="2"></circle>
                       </svg>
-                    ), 
-                    link: '#' 
+                    ),
+                    link: '#'
                   },
-                  { 
+                  {
                     Icon: (props) => (
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
                         <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                       </svg>
-                    ), 
-                    link: '#' 
+                    ),
+                    link: '#'
                   },
                   { Icon: Globe, link: '#' }
                 ].map((social, i) => (
