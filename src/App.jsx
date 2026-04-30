@@ -401,9 +401,9 @@ function App() {
           <div className="flex-1 flex flex-col items-start w-full max-w-xl justify-center text-center lg:text-left items-center lg:items-start">
             <div className="flex items-center space-x-2 mb-6 bg-white/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-black/5 shadow-sm reveal reveal-left reveal-delay-1 active">
               <div className="flex -space-x-1.5">
-                {[...Array(4)].map((_, i) => (
+                {['/latin1.jpg', '/latin2.jpg', '/latin4.jpg', '/latin1.jpg'].map((src, i) => (
                   <div key={i} className="w-5 h-5 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center overflow-hidden">
-                    <img src={`https://i.pravatar.cc/20?img=${i + 10}`} alt="user" />
+                    <img src={src} alt="user" className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>
@@ -616,8 +616,8 @@ function App() {
               <p className="text-gray-600 text-sm max-w-sm leading-relaxed mb-8">{t.testimonials.subtitle}</p>
               <div className="flex items-center gap-4 justify-center md:justify-start">
                 <div className="flex -space-x-2">
-                  {[...Array(5)].map((_, i) => (
-                    <img key={i} src={`https://i.pravatar.cc/32?img=${i + 20}`} className="w-8 h-8 rounded-full border-2 border-white" alt="avatar" />
+                  {['/latin1.jpg', '/latin2.jpg', '/latin4.jpg', '/latin1.jpg', '/latin2.jpg'].map((src, i) => (
+                    <img key={i} src={src} className="w-8 h-8 rounded-full border-2 border-white object-cover" alt="avatar" />
                   ))}
                 </div>
                 <div className="text-xs font-bold text-gray-900">{t.testimonials.rated}</div>
@@ -929,7 +929,7 @@ function App() {
                         <Check size={40} />
                       </div>
                       <h4 className="text-xl font-bold text-gray-900 mb-2">Application Sent!</h4>
-                      <p className="text-gray-500 text-sm">Please make sure to click "Send" in your email client to complete the process.</p>
+                      <p className="text-gray-500 text-sm">We've received your request and our legal team will contact you shortly.</p>
                     </div>
                   ) : (
                     <>
