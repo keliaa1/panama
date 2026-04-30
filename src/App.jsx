@@ -204,14 +204,15 @@ function App() {
   const [langOpen, setLangOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState('EN');
+  const [activeBranch, setActiveBranch] = useState('panama');
   const langRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const t = translations[selectedLang];
 
   const languages = [
-    { code: 'EN', label: 'English' },
-    { code: 'ES', label: 'Español' },
+    { code: 'EN', label: 'English', flag: 'https://flagcdn.com/w40/us.png' },
+    { code: 'ES', label: 'Español', flag: 'https://flagcdn.com/w40/pa.png' },
   ];
 
   // Loading Screen Timer
@@ -312,7 +313,11 @@ function App() {
                 onClick={() => setLangOpen(!langOpen)}
                 className="flex items-center space-x-2 text-xs font-bold text-gray-800 bg-white/50 hover:bg-white/80 transition-all px-3 py-1.5 rounded-lg backdrop-blur-md border border-white shadow-sm"
               >
-                <Globe size={14} className="text-blue-500" />
+                <img 
+                  src={languages.find(l => l.code === selectedLang)?.flag} 
+                  alt={selectedLang} 
+                  className="w-4 h-3 object-cover rounded-sm" 
+                />
                 <span className="hidden sm:inline">{selectedLang}</span>
                 <ChevronDown size={12} className={`text-gray-400 transition-transform duration-300 ${langOpen ? 'rotate-180' : ''}`} />
               </button>
@@ -330,7 +335,10 @@ function App() {
                         selectedLang === lang.code ? 'bg-blue-50/50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'
                       }`}
                     >
-                      <span>{lang.label}</span>
+                      <div className="flex items-center space-x-2">
+                        <img src={lang.flag} alt={lang.label} className="w-4 h-3 object-cover rounded-sm" />
+                        <span>{lang.label}</span>
+                      </div>
                       {selectedLang === lang.code && <Check size={12} className="text-blue-500" />}
                     </button>
                   ))}
@@ -576,29 +584,50 @@ function App() {
               <h3 className="font-bold text-lg text-gray-900 mb-6 uppercase tracking-wider">{t.contact.where}</h3>
               <div className="relative w-full h-[300px] md:h-[350px] rounded-[32px] overflow-hidden border border-black/5 shadow-2xl mb-8 group">
                 <iframe 
-                  src="https://maps.google.com/maps?q=Oceania%20Business%20Plaza,%20Panama%20City&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                  src={activeBranch === 'panama' 
+                    ? "https://maps.google.com/maps?q=Oceania%20Business%20Plaza,%20Panama%20City&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                    : "https://maps.google.com/maps?q=1200%20Brickell%20Ave,%20Miami,%20FL%2033131&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  } 
                   width="100%" 
                   height="100%" 
                   style={{ border: 0, filter: 'grayscale(0.6) contrast(1.1) brightness(0.95)' }} 
                   allowFullScreen="" 
                   loading="lazy" 
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Panama City Map"
+                  title={activeBranch === 'panama' ? "Panama City Map" : "Miami Map"}
                   className="group-hover:grayscale-0 transition-all duration-1000"
                 ></iframe>
               </div>
 
               <div className="space-y-6">
                 <div>
-                  <div className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">{t.contact.hq}</div>
-                  <div className="text-sm font-bold text-gray-900">{t.contact.address}</div>
+                  <div className="flex gap-2 mb-6 p-1 bg-gray-100/50 rounded-xl w-fit">
+                    <button 
+                      onClick={() => setActiveBranch('panama')}
+                      className={`px-4 py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${activeBranch === 'panama' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                    >
+                      Panama Branch
+                    </button>
+                    <button 
+                      onClick={() => setActiveBranch('miami')}
+                      className={`px-4 py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${activeBranch === 'miami' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                    >
+                      Miami Branch
+                    </button>
+                  </div>
+                  <div className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                    {activeBranch === 'panama' ? t.contact.hq : 'Miami Branch'}
+                  </div>
+                  <div className="text-sm font-bold text-gray-900">
+                    {activeBranch === 'panama' ? t.contact.address : '1200 Brickell Ave, Miami, FL 33131'}
+                  </div>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <a href="tel:+5071234567" className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-blue-600 transition-colors">
-                    <Phone size={14} className="text-blue-500" /> +507 123-4567
+                  <a href="tel:+13187706430" className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-blue-600 transition-colors">
+                    <Phone size={14} className="text-blue-500" /> +1 (318) 770-6430
                   </a>
-                  <a href="mailto:hello@panamacompany.co" className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-blue-600 transition-colors">
-                    <Mail size={14} className="text-blue-500" /> hello@panamacompany.co
+                  <a href="mailto:contact@panamacompany.net" className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-blue-600 transition-colors">
+                    <Mail size={14} className="text-blue-500" /> contact@panamacompany.net
                   </a>
                 </div>
               </div>
@@ -698,6 +727,20 @@ function App() {
             </p>
           </div>
         </footer>
+
+        {/* WhatsApp Floating Button */}
+        <a 
+          href="https://wa.me/13187706430" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="fixed bottom-8 right-8 z-[100] w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_10px_25px_rgba(37,211,102,0.3)] hover:scale-110 hover:shadow-[0_15px_30px_rgba(37,211,102,0.4)] transition-all duration-300 group"
+          aria-label="Contact on WhatsApp"
+        >
+          <MessageSquare className="w-7 h-7 fill-white group-hover:animate-pulse" />
+          <span className="absolute right-full mr-4 bg-white text-gray-900 px-4 py-2 rounded-xl text-xs font-bold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-black/5">
+            Chat with us
+          </span>
+        </a>
 
       </div>
     </div>
