@@ -80,8 +80,8 @@ const translations = {
         { name: "Carlos M.", role: "Tech Founder", text: "Seamless and truly private incorporation. Best decision for my assets.", img: "/latin1.jpg" },
         { name: "Lucía R.", role: "Asset Manager", text: "The privacy level is unmatched. Professional and responsive legal team.", img: "/latin2.jpg" },
         { name: "Andrés G.", role: "Global Investor", text: "Speed and compliance are their top priorities. Highly recommended.", img: "/latin4.jpg" },
-        { name: "Sofía V.", role: "E-commerce CEO", text: "Expanding to Panama was easy with their help. The banking setup was a breeze.", img: "/latin2.jpg" },
-        { name: "Diego S.", role: "Real Estate Mogul", text: "World-class asset protection. They handle everything with precision.", img: "/latin1.jpg" },
+        { name: "Sofía V.", role: "Digital Nomad", text: "Setting up my offshore base was incredibly efficient. The support team is world-class.", img: "/latin3.jpg" },
+        { name: "Diego S.", role: "Venture Capitalist", text: "The ultimate solution for asset protection. Their expertise in Panama law is evident.", img: "/latin5.jpg" },
       ]
     },
     contact: {
@@ -186,8 +186,8 @@ const translations = {
         { name: "Carlos M.", role: "Fundador Tecnológico", text: "Incorporación fluida y verdaderamente privada. La mejor decisión para mis activos.", img: "/latin1.jpg" },
         { name: "Lucía R.", role: "Gestora de Activos", text: "El nivel de privacidad es inigualable. Equipo legal profesional y receptivo.", img: "/latin2.jpg" },
         { name: "Andrés G.", role: "Inversor Global", text: "La velocidad y el cumplimiento son sus prioridades. Muy recomendado.", img: "/latin4.jpg" },
-        { name: "Sofía V.", role: "CEO de E-commerce", text: "Expandirse a Panamá fue fácil con su ayuda. La apertura bancaria fue pan comido.", img: "/latin2.jpg" },
-        { name: "Diego S.", role: "Magnate Inmobiliario", text: "Protección de activos de clase mundial. Manejan todo con precisión.", img: "/latin1.jpg" },
+        { name: "Sofía V.", role: "Nómada Digital", text: "Establecer mi base offshore fue increíblemente eficiente. El equipo de soporte es de clase mundial.", img: "/latin3.jpg" },
+        { name: "Diego S.", role: "Capitalista de Riesgo", text: "La solución definitiva para la protección de activos. Su experiencia en leyes panameñas es evidente.", img: "/latin5.jpg" },
       ]
     },
     contact: {
@@ -399,7 +399,7 @@ function App() {
           <div className="flex-1 flex flex-col items-start w-full max-w-xl justify-center text-center lg:text-left items-center lg:items-start">
             <div className="flex items-center space-x-2 mb-6 bg-white/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-black/5 shadow-sm reveal reveal-left reveal-delay-1 active">
               <div className="flex -space-x-1.5">
-                {['/latin1.jpg', '/latin2.jpg', '/latin4.jpg', '/latin1.jpg'].map((src, i) => (
+                {['/latin1.jpg', '/latin2.jpg', '/latin3.jpg', '/latin4.jpg'].map((src, i) => (
                   <div key={i} className="w-5 h-5 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center overflow-hidden">
                     <img src={src} alt="user" className="w-full h-full object-cover" />
                   </div>
@@ -430,7 +430,7 @@ function App() {
             </div>
           </div>
 
-          <div className="flex-1 relative w-full flex justify-center items-center h-[280px] sm:h-[350px] lg:h-[380px] reveal reveal-scale reveal-delay-2 active">
+          <div className="hidden lg:flex flex-1 relative w-full justify-center items-center h-[380px] reveal reveal-scale reveal-delay-2 active">
             <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
               <div className="absolute w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] bg-blue-400/10 rounded-full blur-[60px] animate-float" />
               <video
@@ -494,12 +494,12 @@ function App() {
         {/* Pricing Section */}
         <section id="pricing" className="py-20 px-2 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-100/30 rounded-full blur-[100px] pointer-events-none" />
-          <div className="mb-16 reveal reveal-left text-center md:text-left flex flex-col md:flex-row items-end justify-between gap-6">
+          <div className="mb-16 reveal reveal-left text-left flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
             <div>
-              <h2 className="font-['Fustat'] font-bold text-5xl md:text-[60px] text-gray-900 leading-tight tracking-[-3px] uppercase">{t.pricing.titleLine1}</h2>
-              <h2 className="font-['Fustat'] font-bold text-5xl md:text-[60px] text-gray-900 -mt-6 tracking-[-3px] uppercase">{t.pricing.titleLine2}</h2>
+              <h2 className="font-['Fustat'] font-bold text-6xl md:text-[80px] text-gray-900 leading-tight tracking-[-3px] uppercase">{t.pricing.titleLine1}</h2>
+              <h2 className="font-['Fustat'] font-bold text-6xl md:text-[80px] text-gray-900 -mt-4 md:-mt-8 tracking-[-3px] uppercase">{t.pricing.titleLine2}</h2>
             </div>
-            <p className="text-gray-400 text-xs font-bold max-w-[200px] text-left md:text-right mb-4">Transparent offshore solutions with zero hidden costs.</p>
+            <p className="text-gray-400 text-xs font-bold max-w-[200px] text-left mb-4">Transparent offshore solutions with zero hidden costs.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
@@ -606,7 +606,7 @@ function App() {
         </section>
 
         {/* Testimonials Marquee Section */}
-        <section id="testimonials" className="py-20 overflow-hidden reveal reveal-up px-2">
+        <section id="testimonials" className="py-12 md:py-20 overflow-hidden reveal reveal-up px-2">
           <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
             <div className="flex-1 text-center md:text-left reveal reveal-left">
               <span className="text-blue-600 font-bold text-[10px] uppercase tracking-[0.2em] mb-4 block">{t.testimonials.badge}</span>
@@ -614,7 +614,7 @@ function App() {
               <p className="text-gray-600 text-sm max-w-sm leading-relaxed mb-8">{t.testimonials.subtitle}</p>
               <div className="flex items-center gap-4 justify-center md:justify-start">
                 <div className="flex -space-x-2">
-                  {['/latin1.jpg', '/latin2.jpg', '/latin4.jpg', '/latin1.jpg', '/latin2.jpg'].map((src, i) => (
+                  {['/latin1.jpg', '/latin2.jpg', '/latin3.jpg', '/latin4.jpg', '/latin5.jpg'].map((src, i) => (
                     <img key={i} src={src} className="w-8 h-8 rounded-full border-2 border-white object-cover" alt="avatar" />
                   ))}
                 </div>
@@ -622,8 +622,6 @@ function App() {
               </div>
             </div>
             <div className="flex-1 relative h-[400px] md:h-[450px] overflow-hidden w-full reveal reveal-right">
-              <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white to-transparent z-10" />
-              <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent z-10" />
               <div className="animate-scroll-y flex flex-col gap-4 py-10">
                 {[...t.testimonials.items, ...t.testimonials.items].map((item, i) => (
                   <div key={i} className="bg-[#F8F9FA] p-5 rounded-[20px] border border-black/[0.03] shadow-sm transition-all">
@@ -643,7 +641,7 @@ function App() {
         </section>
 
         {/* Contact Us Section */}
-        <section id="contact" className="py-24 reveal reveal-up px-2">
+        <section id="contact" className="py-12 md:py-24 reveal reveal-up px-2">
           <div className="text-center mb-16 reveal reveal-up">
             <h2 className="font-['Fustat'] font-bold text-4xl md:text-[48px] tracking-[-1.5px] text-gray-900 mb-4">{t.contact.title}</h2>
             <p className="text-gray-500 text-sm font-medium px-4">{t.contact.subtitle}</p>
@@ -804,7 +802,6 @@ function App() {
                 ))}
               </ul>
             </div>
-
 
 
             <div className="reveal reveal-up reveal-delay-3">
