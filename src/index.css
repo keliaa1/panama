@@ -42,6 +42,19 @@ body {
   animation-play-state: paused;
 }
 
+@keyframes scroll-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-scroll-x {
+  animation: scroll-x 20s linear infinite;
+}
+
+.animate-scroll-x:hover {
+  animation-play-state: paused;
+}
+
 #scroll-progress {
   position: fixed;
   top: 0;

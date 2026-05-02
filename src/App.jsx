@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowRight, Star, Hexagon, Circle, Triangle, Square, Cloud, ChevronDown, Globe, Shield, Zap, Users, BarChart, Check, MousePointer2, MessageSquare, Layout, Wallet, Quote, Mail, Phone, MapPin, Send, User, Menu, X } from 'lucide-react';
+import { ArrowRight, Star, Hexagon, Circle, Triangle, Square, Cloud, ChevronDown, Globe, Shield, Zap, Users, BarChart, Check, MousePointer2, MessageSquare, Layout, Wallet, Quote, Mail, Phone, MapPin, Send, User, Menu, X, Landmark } from 'lucide-react';
 import panamaLogo from './assets/panamalogo.png';
 
 const translations = {
@@ -90,7 +90,7 @@ const translations = {
       where: "Where to find us",
       city: "Panama City",
       hq: "Headquarters",
-      address: "Oceanía Business Plaza, Torre 2000",
+      address: "Tower Financial Center | Panama City",
       form: {
         firstName: "First Name",
         lastName: "Last Name",
@@ -104,8 +104,7 @@ const translations = {
       desc: "We are strategic partners providing the most secure path to offshore incorporation and asset protection.",
       cols: {
         pages: { title: "Pages", items: ['Home', 'About', 'Why Choose Us', 'Pricing', 'Testimonials', 'Contact'] },
-        resources: { title: "Resources", items: ['Knowledge Base', 'Panama Laws', 'Tax Guides', 'Forms & Docs', 'Blog', 'Support Center'] },
-        legal: { title: "Legal", items: ['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'Disclaimer', 'Incorporation Agreement'] }
+        legal: { title: "Legal", items: ['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'Disclaimer', 'Payment Methods'] }
       },
       copy: "© 2024 PANAMA COMPANY S.A. ALL RIGHTS RESERVED."
     }
@@ -197,7 +196,7 @@ const translations = {
       where: "Dónde encontrarnos",
       city: "Ciudad de Panamá",
       hq: "Sede Principal",
-      address: "Oceanía Business Plaza, Torre 2000",
+      address: "Tower Financial Center | Panama City",
       form: {
         firstName: "Nombre",
         lastName: "Apellido",
@@ -211,8 +210,7 @@ const translations = {
       desc: "Somos socios estratégicos que brindan el camino más seguro hacia la incorporación offshore y la protección de activos.",
       cols: {
         pages: { title: "Páginas", items: ['Inicio', 'Nosotros', '¿Por qué elegirnos?', 'Precios', 'Testimonios', 'Contacto'] },
-        resources: { title: "Recursos", items: ['Base de Conocimientos', 'Leyes de Panamá', 'Guías Fiscales', 'Formas y Docs', 'Blog', 'Centro de Soporte'] },
-        legal: { title: "Legal", items: ['Política de Privacidad', 'Términos de Servicio', 'Política de Cookies', 'Descargo de Responsabilidad', 'Acuerdo de Incorporación'] }
+        legal: { title: "Legal", items: ['Política de Privacidad', 'Términos de Servicio', 'Política de Cookies', 'Descargo de Responsabilidad', 'Métodos de Pago'] }
       },
       copy: "© 2024 PANAMA COMPANY S.A. TODOS LOS DERECHOS RESERVADOS."
     }
@@ -657,7 +655,7 @@ function App() {
               <div className="relative w-full h-[300px] md:h-[350px] rounded-[32px] overflow-hidden border border-black/5 shadow-2xl mb-8 group">
                 <iframe
                   src={activeBranch === 'panama'
-                    ? "https://maps.google.com/maps?q=Oceania%20Business%20Plaza,%20Panama%20City&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    ? "https://maps.google.com/maps?q=Tower%20Financial%20Center,%20Panama%20City&t=&z=15&ie=UTF8&iwloc=&output=embed"
                     : "https://maps.google.com/maps?q=1200%20Brickell%20Ave,%20Miami,%20FL%2033131&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   }
                   width="100%"
@@ -676,14 +674,16 @@ function App() {
                   <div className="flex gap-2 mb-6 p-1 bg-gray-100/50 rounded-xl w-fit">
                     <button
                       onClick={() => setActiveBranch('panama')}
-                      className={`px-4 py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${activeBranch === 'panama' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                      className={`flex items-center gap-2 px-4 py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${activeBranch === 'panama' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
                     >
+                      <img src="https://flagcdn.com/w40/pa.png" alt="Panama" className="w-4 h-3 object-cover" />
                       Panama Branch
                     </button>
                     <button
                       onClick={() => setActiveBranch('miami')}
-                      className={`px-4 py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${activeBranch === 'miami' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                      className={`flex items-center gap-2 px-4 py-2 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${activeBranch === 'miami' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
                     >
+                      <img src="https://flagcdn.com/w40/us.png" alt="US" className="w-4 h-3 object-cover" />
                       Miami Branch
                     </button>
                   </div>
@@ -691,12 +691,15 @@ function App() {
                     {activeBranch === 'panama' ? t.contact.hq : 'Miami Branch'}
                   </div>
                   <div className="text-sm font-bold text-gray-900">
-                    {activeBranch === 'panama' ? t.contact.address : '1200 Brickell Ave, Miami, FL 33131'}
+                    {activeBranch === 'panama' ? t.contact.address : '1200 Brickell Ave | Miami, FL 33131'}
                   </div>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <a href="tel:+13187706430" className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-blue-600 transition-colors">
-                    <Phone size={14} className="text-blue-500" /> +1 (318) 770-6430
+                <div className="flex flex-col gap-3">
+                  <a href="https://wa.me/13187706430" className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-green-600 transition-colors">
+                    <svg className="w-5 h-5 fill-green-500" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.63 1.44h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    +1 (318) 770-6430
                   </a>
                   <a href="mailto:contact@panamacompany.net" className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-blue-600 transition-colors">
                     <Mail size={14} className="text-blue-500" /> contact@panamacompany.net
@@ -739,8 +742,47 @@ function App() {
           </div>
         </section>
 
+        {/* Payment Methods Marquee */}
+        <div className="w-full overflow-hidden py-12 mt-16 relative">
+          <div className="absolute inset-y-0 left-0 w-24  z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24  z-10 pointer-events-none" />
+          <div className="flex whitespace-nowrap animate-scroll-x items-center w-max">
+            {[...Array(2)].map((_, i) => (
+              <div key={i} className="flex items-center gap-12 px-6">
+                {[
+                  { name: 'Google Pay', logo: 'https://logo.clearbit.com/pay.google.com' },
+                  { name: 'Apple Pay', logo: 'https://logo.clearbit.com/apple.com' },
+                  { name: 'Master Card', logo: 'https://logo.clearbit.com/mastercard.com' },
+                  { name: 'Visa', logo: 'https://logo.clearbit.com/visa.com' },
+                  { name: 'American Express', logo: 'https://logo.clearbit.com/americanexpress.com' },
+                  { name: 'Diners Club', logo: 'https://logo.clearbit.com/dinersclub.com' },
+                  { name: 'UnionPay', logo: 'https://logo.clearbit.com/unionpayintl.com' },
+                  { name: 'US Bank Transfer', icon: Landmark },
+                  { name: 'Panama Bank Transfer', icon: Landmark },
+                  { name: 'USDT / USDC', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.svg?v=024' },
+                  { name: 'BTC', logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=024' },
+                  { name: 'ETH', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=024' }
+                ].map((method, j) => (
+                  <div key={`${i}-${j}`} className="flex flex-col items-center justify-center min-w-[100px] gap-3 group">
+                    {method.logo ? (
+                      <div className="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-2xl p-2 group-hover:scale-110 transition-transform">
+                        <img src={method.logo} alt={method.name} className="w-full h-full object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
+                      </div>
+                    ) : (
+                      <div className="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-2xl p-2 text-gray-400 group-hover:text-blue-600 group-hover:scale-110 group-hover:bg-blue-50 transition-all duration-300">
+                        {method.icon && <method.icon size={24} />}
+                      </div>
+                    )}
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{method.name}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Global Footer */}
-        <footer className="mt-24 pt-20 pb-10 border-t border-gray-100 reveal reveal-up px-2">
+        <footer className="mt-16 pt-10 pb-10 reveal reveal-up px-2">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
             <div className="lg:col-span-1 reveal reveal-left">
               <div className="font-['Fustat'] font-bold text-xl text-gray-900 mb-6 flex items-center">
@@ -750,43 +792,6 @@ function App() {
               <p className="text-sm text-gray-500 leading-relaxed font-medium mb-8 max-w-xs">
                 {t.footer.desc}
               </p>
-              <div className="flex gap-4">
-                {[
-                  {
-                    Icon: (props) => (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                      </svg>
-                    ),
-                    link: 'https://www.instagram.com/panamacompanyok'
-                  },
-                  {
-                    Icon: (props) => (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                        <rect x="2" y="9" width="4" height="12"></rect>
-                        <circle cx="4" cy="4" r="2"></circle>
-                      </svg>
-                    ),
-                    link: '#'
-                  },
-                  {
-                    Icon: (props) => (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                      </svg>
-                    ),
-                    link: '#'
-                  },
-                  { Icon: Globe, link: '#' }
-                ].map((social, i) => (
-                  <a key={i} href={social.link} target={social.link !== '#' ? "_blank" : undefined} rel={social.link !== '#' ? "noopener noreferrer" : undefined} className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
-                    <social.Icon className="w-4 h-4" />
-                  </a>
-                ))}
-              </div>
             </div>
 
             <div className="reveal reveal-up reveal-delay-1">
@@ -800,16 +805,7 @@ function App() {
               </ul>
             </div>
 
-            <div className="reveal reveal-up reveal-delay-2">
-              <h4 className="font-bold text-xs uppercase tracking-widest text-gray-900 mb-8">{t.footer.cols.resources.title}</h4>
-              <ul className="space-y-3">
-                {t.footer.cols.resources.items.map((link) => (
-                  <li key={link}>
-                    <a href="#" className="text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors">{link}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+
 
             <div className="reveal reveal-up reveal-delay-3">
               <h4 className="font-bold text-xs uppercase tracking-widest text-gray-900 mb-8">{t.footer.cols.legal.title}</h4>
