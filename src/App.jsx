@@ -621,10 +621,15 @@ function App() {
                 <div className="text-xs font-bold text-gray-900">{t.testimonials.rated}</div>
               </div>
             </div>
-            <div className="flex-1 relative h-[400px] md:h-[450px] overflow-hidden w-full reveal reveal-right">
+            <div className="flex-1 relative md:h-[450px] overflow-hidden w-full reveal reveal-right">
               <div className="animate-scroll-y flex flex-col gap-4 py-10">
                 {[...t.testimonials.items, ...t.testimonials.items].map((item, i) => (
-                  <div key={i} className="bg-[#F8F9FA] p-5 rounded-[20px] border border-black/[0.03] shadow-sm transition-all">
+                  <div 
+                    key={i} 
+                    className={`bg-[#F8F9FA] p-5 rounded-[20px] border border-black/[0.03] shadow-sm transition-all ${
+                      i >= t.testimonials.items.length ? 'hidden md:block' : (i >= 3 ? 'hidden md:block' : '')
+                    }`}
+                  >
                     <div className="flex items-center gap-3 mb-3">
                       <img src={item.img} className="w-9 h-9 rounded-xl object-cover" alt="client" />
                       <div>
@@ -740,42 +745,45 @@ function App() {
           </div>
         </section>
 
-        {/* Payment Methods Marquee */}
-        <div className="w-full overflow-hidden py-12 mt-16 relative">
-          <div className="absolute inset-y-0 left-0 w-24  z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-24  z-10 pointer-events-none" />
-          <div className="flex whitespace-nowrap animate-scroll-x items-center w-max">
-            {[...Array(2)].map((_, i) => (
-              <div key={i} className="flex items-center gap-12 px-6">
-                {[
-                  { name: 'Google Pay', logo: 'https://logo.clearbit.com/pay.google.com' },
-                  { name: 'Apple Pay', logo: 'https://logo.clearbit.com/apple.com' },
-                  { name: 'Master Card', logo: 'https://logo.clearbit.com/mastercard.com' },
-                  { name: 'Visa', logo: 'https://logo.clearbit.com/visa.com' },
-                  { name: 'American Express', logo: 'https://logo.clearbit.com/americanexpress.com' },
-                  { name: 'Diners Club', logo: 'https://logo.clearbit.com/dinersclub.com' },
-                  { name: 'UnionPay', logo: 'https://logo.clearbit.com/unionpayintl.com' },
-                  { name: 'US Bank Transfer', icon: Landmark },
-                  { name: 'Panama Bank Transfer', icon: Landmark },
-                  { name: 'USDT / USDC', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.svg?v=024' },
-                  { name: 'BTC', logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=024' },
-                  { name: 'ETH', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=024' }
-                ].map((method, j) => (
-                  <div key={`${i}-${j}`} className="flex flex-col items-center justify-center min-w-[100px] gap-3 group">
-                    {method.logo ? (
-                      <div className="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-2xl p-2 group-hover:scale-110 transition-transform">
-                        <img src={method.logo} alt={method.name} className="w-full h-full object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
+        {/* Payment Methods Section */}
+        <div id="payment-methods" className="mt-20 reveal reveal-up">
+          <div className="text-center mb-10">
+            <span className="text-blue-600 font-bold text-[10px] uppercase tracking-[0.2em] mb-3 block">{selectedLang === 'EN' ? 'Security & Payments' : 'Seguridad y Pagos'}</span>
+            <h2 className="font-['Fustat'] font-bold text-3xl md:text-[42px] tracking-[-1.5px] text-gray-900">{t.footer.cols.legal.items[4]}</h2>
+          </div>
+
+          <div className="w-full overflow-hidden py-12 relative">
+            <div className="flex whitespace-nowrap animate-scroll-x items-center w-max">
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="flex items-center gap-12 px-6">
+                  {[
+                    { name: 'Google Pay', logo: 'https://www.gstatic.com/images/branding/googlepay/gs_googlepay_logo_80dp_2x.png' },
+                    { name: 'Apple Pay', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg' },
+                    { name: 'Master Card', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg' },
+                    { name: 'Visa', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg' },
+                    { name: 'American Express', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg' },
+                    { name: 'US Bank Transfer', icon: Landmark },
+                    { name: 'Panama Bank Transfer', icon: Landmark },
+                    { name: 'USDT / USDC', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=024' },
+                    { name: 'BTC', logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=024' },
+                    { name: 'ETH', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png?v=024' }
+                  ].map((method, j) => (
+                    <div key={`${i}-${j}`} className="flex flex-col items-center justify-center min-w-[100px] gap-3 group">
+                      <div className="w-14 h-14 flex items-center justify-center bg-gray-50 rounded-2xl p-3 group-hover:scale-110 group-hover:bg-white group-hover:shadow-lg transition-all duration-300">
+                        {method.logo ? (
+                          <img src={method.logo} alt={method.name} className="w-full h-full object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
+                        ) : (
+                          <div className="text-gray-400 group-hover:text-blue-600 transition-colors">
+                            {method.icon && <method.icon size={28} />}
+                          </div>
+                        )}
                       </div>
-                    ) : (
-                      <div className="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-2xl p-2 text-gray-400 group-hover:text-blue-600 group-hover:scale-110 group-hover:bg-blue-50 transition-all duration-300">
-                        {method.icon && <method.icon size={24} />}
-                      </div>
-                    )}
-                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{method.name}</span>
-                  </div>
-                ))}
-              </div>
-            ))}
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{method.name}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

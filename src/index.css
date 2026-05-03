@@ -34,8 +34,10 @@ body {
   to { transform: translateY(-50%); }
 }
 
-.animate-scroll-y {
-  animation: scroll-y 20s linear infinite;
+@media (min-width: 768px) {
+  .animate-scroll-y {
+    animation: scroll-y 20s linear infinite;
+  }
 }
 
 .animate-scroll-y:hover {
