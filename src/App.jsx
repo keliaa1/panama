@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ArrowRight, Star, Hexagon, Circle, Triangle, Square, Cloud, ChevronDown, Globe, Shield, Zap, Users, BarChart, Check, MousePointer2, MessageSquare, Layout, Wallet, Quote, Mail, Phone, MapPin, Send, User, Menu, X, Landmark } from 'lucide-react';
 import panamaLogo from './assets/panamalogo.png';
+import visaLogo from './assets/visa.svg';
+
 
 const translations = {
   EN: {
@@ -319,7 +321,7 @@ function App() {
         <nav className="sticky top-[20px] z-50 mx-auto w-full md:w-fit flex items-center justify-between px-5 py-2.5 bg-white/40 backdrop-blur-[30px] rounded-[18px] md:rounded-[20px] border border-black/5 shadow-[0_8px_32px_rgba(0,0,0,0.05),inset_0px_2px_4px_0px_rgba(255,255,255,0.4)] transition-all">
           <div className="font-['Fustat'] font-bold text-lg text-gray-900 tracking-tight flex items-center shrink-0">
             <img src={panamaLogo} alt="Panama Company" className="w-7 h-7 rounded-lg object-contain mr-2 shadow-sm" />
-            Panama
+            Panama Company
           </div>
 
           {/* Desktop Nav Links */}
@@ -624,8 +626,8 @@ function App() {
             <div className="flex-1 relative md:h-[450px] overflow-hidden w-full reveal reveal-right">
               <div className="animate-scroll-y flex flex-col gap-4 py-10">
                 {[...t.testimonials.items, ...t.testimonials.items].map((item, i) => (
-                  <div 
-                    key={i} 
+                  <div
+                    key={i}
                     className={`bg-[#F8F9FA] p-5 rounded-[20px] border border-black/[0.03] shadow-sm transition-all ${
                       i >= t.testimonials.items.length ? 'hidden md:block' : (i >= 3 ? 'hidden md:block' : '')
                     }`}
@@ -644,6 +646,48 @@ function App() {
             </div>
           </div>
         </section>
+
+        {/* Payment Methods Section */}
+        <div id="payment-methods" className="mt-20 reveal reveal-up">
+          <div className="text-center mb-10">
+            <span className="text-blue-600 font-bold text-[10px] uppercase tracking-[0.2em] mb-3 block">{selectedLang === 'EN' ? 'Security & Payments' : 'Seguridad y Pagos'}</span>
+            <h2 className="font-['Fustat'] font-bold text-3xl md:text-[42px] tracking-[-1.5px] text-gray-900">{t.footer.cols.legal.items[4]}</h2>
+          </div>
+
+          <div className="w-full overflow-hidden py-12 relative">
+            <div className="flex whitespace-nowrap animate-scroll-x items-center w-max">
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="flex items-center gap-12 px-6">
+                  {[
+                    { name: 'Google Pay', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg' },
+                    { name: 'Apple Pay', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg' },
+                    { name: 'Master Card', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg' },
+                    { name: 'Visa', logo: visaLogo },
+                    { name: 'American Express', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg' },
+                    { name: 'US Bank Transfer', icon: Landmark },
+                    { name: 'Panama Bank Transfer', icon: Landmark },
+                    { name: 'USDT / USDC', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=024' },
+                    { name: 'BTC', logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=024' },
+                    { name: 'ETH', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png?v=024' }
+                  ].map((method, j) => (
+                    <div key={`${i}-${j}`} className="flex flex-col items-center justify-center min-w-[100px] gap-3 group">
+                      <div className="w-14 h-14 flex items-center justify-center bg-gray-50 rounded-2xl p-3 group-hover:scale-110 group-hover:bg-white group-hover:shadow-lg transition-all duration-300">
+                        {method.logo ? (
+                          <img src={method.logo} alt={method.name} className="w-full h-full object-contain transition-all duration-300" />
+                        ) : (
+                          <div className="text-blue-600 transition-colors">
+                            {method.icon && <method.icon size={28} />}
+                          </div>
+                        )}
+                      </div>
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{method.name}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* Contact Us Section */}
         <section id="contact" className="py-12 md:py-24 reveal reveal-up px-2">
@@ -745,55 +789,13 @@ function App() {
           </div>
         </section>
 
-        {/* Payment Methods Section */}
-        <div id="payment-methods" className="mt-20 reveal reveal-up">
-          <div className="text-center mb-10">
-            <span className="text-blue-600 font-bold text-[10px] uppercase tracking-[0.2em] mb-3 block">{selectedLang === 'EN' ? 'Security & Payments' : 'Seguridad y Pagos'}</span>
-            <h2 className="font-['Fustat'] font-bold text-3xl md:text-[42px] tracking-[-1.5px] text-gray-900">{t.footer.cols.legal.items[4]}</h2>
-          </div>
-
-          <div className="w-full overflow-hidden py-12 relative">
-            <div className="flex whitespace-nowrap animate-scroll-x items-center w-max">
-              {[...Array(2)].map((_, i) => (
-                <div key={i} className="flex items-center gap-12 px-6">
-                  {[
-                    { name: 'Google Pay', logo: 'https://www.gstatic.com/images/branding/googlepay/gs_googlepay_logo_80dp_2x.png' },
-                    { name: 'Apple Pay', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg' },
-                    { name: 'Master Card', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg' },
-                    { name: 'Visa', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg' },
-                    { name: 'American Express', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg' },
-                    { name: 'US Bank Transfer', icon: Landmark },
-                    { name: 'Panama Bank Transfer', icon: Landmark },
-                    { name: 'USDT / USDC', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=024' },
-                    { name: 'BTC', logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=024' },
-                    { name: 'ETH', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png?v=024' }
-                  ].map((method, j) => (
-                    <div key={`${i}-${j}`} className="flex flex-col items-center justify-center min-w-[100px] gap-3 group">
-                      <div className="w-14 h-14 flex items-center justify-center bg-gray-50 rounded-2xl p-3 group-hover:scale-110 group-hover:bg-white group-hover:shadow-lg transition-all duration-300">
-                        {method.logo ? (
-                          <img src={method.logo} alt={method.name} className="w-full h-full object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
-                        ) : (
-                          <div className="text-gray-400 group-hover:text-blue-600 transition-colors">
-                            {method.icon && <method.icon size={28} />}
-                          </div>
-                        )}
-                      </div>
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{method.name}</span>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
         {/* Global Footer */}
         <footer className="mt-16 pt-10 pb-10 reveal reveal-up px-2">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
             <div className="lg:col-span-1 reveal reveal-left">
               <div className="font-['Fustat'] font-bold text-xl text-gray-900 mb-6 flex items-center">
                 <img src={panamaLogo} alt="Logo" className="w-8 h-8 mr-2" />
-                Panama
+                Panama Company
               </div>
               <p className="text-sm text-gray-500 leading-relaxed font-medium mb-8 max-w-xs">
                 {t.footer.desc}
