@@ -43,32 +43,35 @@ const translations = {
       titleLine1: "Plans &",
       titleLine2: "Pricing",
       standard: {
-        badge: "Standard Pack",
+        badge: "STANDARD",
         tag: "Fast Track",
         sub: "Reliable Setup. First time founders.",
-        price: "$2,450",
-        period: "/ONE-TIME",
-        features: ['Official Incorporation', 'Resident Agent (1yr)', 'Articles of Incorporation', 'Share Certificates'],
+        price: "$2.299",
+        period: "/STARTING",
+        renewal: "$999 from the second year onwards",
+        features: ['Company incorporation', 'Certificate of existence', 'Shares certificate', 'Registered agent', 'Local address'],
         cta: "Reserve Setup",
         testimonial: "Fastest setup ever."
       },
       executive: {
-        badge: "Executive Pro",
+        badge: "EXECUTIVE",
         tag: "Most Popular",
         sub: "Full Asset Protection. Global Enterprises.",
-        price: "$4,900",
-        period: "/ONE-TIME",
-        features: ['Everything in Standard', 'Nominee Directors', 'Banking Intro', 'Full Digital Kit'],
+        price: "$2.899",
+        period: "/STARTING",
+        renewal: "$1.399 from the second year onwards",
+        features: ['Everything in Standard', '+ Annual accounting obligations', '+ Annual franchise tax'],
         cta: "View Plan",
         testimonial: "Unmatched privacy."
       },
       elite: {
-        badge: "Corporate Elite",
+        badge: "CORPORATE",
         tag: "Full Concierge",
         sub: "Ultimate Asset Shield. Private Wealth.",
-        price: "$9,800",
-        period: "/ONE-TIME",
-        features: ['Everything in Executive', 'Private Foundation', 'Tax Strategy', 'Legal Advisor'],
+        price: "$3.599",
+        period: "/STARTING",
+        renewal: "$1.399 from the second year onwards",
+        features: ['Everything in Executive', '+ Local corporate bank account', '+ Official english translation and apostille of all documents.'],
         cta: "View Plan",
         testimonial: "The ultimate solution."
       }
@@ -149,32 +152,35 @@ const translations = {
       titleLine1: "Planes y",
       titleLine2: "Precios",
       standard: {
-        badge: "Paquete Estándar",
+        badge: "ESTÁNDAR",
         tag: "Vía Rápida",
         sub: "Configuración confiable. Para nuevos fundadores.",
-        price: "$2,450",
-        period: "/ÚNICO PAGO",
-        features: ['Incorporación Oficial', 'Agente Residente (1 año)', 'Pacto Social', 'Certificados de Acciones'],
+        price: "$2.299",
+        period: "/INICIAL",
+        renewal: "$999 a partir del segundo año en adelante",
+        features: ['Incorporación de empresa', 'Certificado de vigencia', 'Certificado de acciones', 'Agente residente', 'Dirección local'],
         cta: "Reservar Configuración",
         testimonial: "La configuración más rápida."
       },
       executive: {
-        badge: "Ejecutivo Pro",
+        badge: "EJECUTIVO",
         tag: "Más Popular",
         sub: "Protección total de activos. Empresas Globales.",
-        price: "$4,900",
-        period: "/ÚNICO PAGO",
-        features: ['Todo en el Estándar', 'Directores Nominales', 'Introducción Bancaria', 'Kit Digital Completo'],
+        price: "$2.899",
+        period: "/INICIAL",
+        renewal: "$1.399 a partir del segundo año en adelante",
+        features: ['Todo en el Estándar', '+ Obligaciones contables anuales', '+ Tasa única anual'],
         cta: "Ver Plan",
         testimonial: "Privacidad inigualable."
       },
       elite: {
-        badge: "Corporativo Elite",
+        badge: "CORPORATIVO",
         tag: "Conserje Total",
         sub: "Escudo Máximo. Riqueza Privada.",
-        price: "$9,800",
-        period: "/ÚNICO PAGO",
-        features: ['Todo en Ejecutivo', 'Fundación Privada', 'Estrategia Fiscal', 'Asesor Legal'],
+        price: "$3.599",
+        period: "/INICIAL",
+        renewal: "$1.399 a partir del segundo año en adelante",
+        features: ['Todo en Ejecutivo', '+ Cuenta bancaria corporativa local', '+ Traducción oficial al inglés y apostilla de todos los documentos.'],
         cta: "Ver Plan",
         testimonial: "La solución definitiva."
       }
@@ -230,7 +236,7 @@ function App() {
   const [formData, setFormData] = useState({
     companyName: '',
     activity: '',
-    pack: 'Executive Pro',
+    pack: 'EXECUTIVE',
     paymentMethod: 'Credit/debit card'
   });
   const langRef = useRef(null);
@@ -524,11 +530,18 @@ function App() {
                     </div>
                   ))}
                 </div>
+                {t.pricing.standard.renewal && (
+                  <div className="mb-8 p-3 bg-blue-50/50 rounded-xl border border-blue-100/50">
+                    <p className="text-[10px] font-bold text-blue-600 leading-tight">
+                      {t.pricing.standard.renewal}
+                    </p>
+                  </div>
+                )}
               </div>
               <div className="flex flex-col gap-4">
                 <button
                   onClick={() => {
-                    setFormData({...formData, pack: 'Standard Pack'});
+                    setFormData({...formData, pack: 'STANDARD'});
                     setShowModal(true);
                   }}
                   className="w-full bg-gray-900 text-white px-6 py-3 rounded-xl text-xs font-bold hover:bg-black transition-all shadow-lg flex items-center justify-center gap-2 group"
@@ -558,11 +571,18 @@ function App() {
                     </div>
                   ))}
                 </div>
+                {t.pricing.executive.renewal && (
+                  <div className="mb-8 p-3 bg-white/5 rounded-xl border border-white/10">
+                    <p className="text-[10px] font-bold text-blue-400 leading-tight">
+                      {t.pricing.executive.renewal}
+                    </p>
+                  </div>
+                )}
               </div>
               <div className="flex flex-col gap-4">
                 <button
                   onClick={() => {
-                    setFormData({...formData, pack: 'Executive Pro'});
+                    setFormData({...formData, pack: 'EXECUTIVE'});
                     setShowModal(true);
                   }}
                   className="w-full bg-white text-gray-900 px-6 py-3 rounded-xl text-xs font-bold hover:bg-gray-50 transition-all shadow-xl flex items-center justify-center gap-2 group"
@@ -591,11 +611,18 @@ function App() {
                     </div>
                   ))}
                 </div>
+                {t.pricing.elite.renewal && (
+                  <div className="mb-8 p-3 bg-blue-50/50 rounded-xl border border-blue-100/50">
+                    <p className="text-[10px] font-bold text-blue-600 leading-tight">
+                      {t.pricing.elite.renewal}
+                    </p>
+                  </div>
+                )}
               </div>
               <div className="flex flex-col gap-4">
                 <button
                   onClick={() => {
-                    setFormData({...formData, pack: 'Corporate Elite'});
+                    setFormData({...formData, pack: 'CORPORATE'});
                     setShowModal(true);
                   }}
                   className="w-full bg-blue-600 text-white px-6 py-3 rounded-xl text-xs font-bold hover:bg-blue-700 transition-all shadow-lg flex items-center justify-center gap-2 group"
