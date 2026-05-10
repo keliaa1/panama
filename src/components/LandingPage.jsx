@@ -441,9 +441,9 @@ const LandingPage = ({ selectedLang, setSelectedLang, t, onNavigate }) => {
               {[...Array(2)].map((_, i) => (
                 <div key={i} className="flex items-center gap-12 px-6">
                   {[
-                    { name: 'Google Pay', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg' },
-                    { name: 'Apple Pay', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg' },
-                    { name: 'Master Card', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg' },
+                    { name: 'Google Pay', iconElement: <svg viewBox="0 0 100 60" className="w-full h-full"><rect width="100" height="60" rx="10" fill="white"/><text x="50" y="38" fontFamily="sans-serif" fontSize="20" fontWeight="bold" fill="#3c4043" textAnchor="middle">G Pay</text></svg> },
+                    { name: 'Apple Pay', iconElement: <svg viewBox="0 0 100 60" className="w-full h-full"><rect width="100" height="60" rx="10" fill="black"/><text x="50" y="38" fontFamily="sans-serif" fontSize="20" fontWeight="bold" fill="white" textAnchor="middle"> Pay</text></svg> },
+                    { name: 'Master Card', iconElement: <svg viewBox="0 0 100 60" className="w-full h-full"><rect width="100" height="60" rx="10" fill="white"/><circle cx="40" cy="30" r="16" fill="#eb001b" fillOpacity="0.9"/><circle cx="60" cy="30" r="16" fill="#f79e1b" fillOpacity="0.9"/></svg> },
                     { name: 'Visa', logo: visaLogo },
                     { name: 'American Express', iconElement: <svg viewBox="0 0 100 60" className="w-full h-full"><rect width="100" height="60" rx="10" fill="#002663"/><text x="50" y="38" fontFamily="sans-serif" fontSize="24" fontWeight="bold" fill="white" textAnchor="middle">AMEX</text></svg> },
                     { name: 'US Bank Transfer', icon: Landmark },
