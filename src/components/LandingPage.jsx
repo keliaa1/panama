@@ -445,16 +445,18 @@ const LandingPage = ({ selectedLang, setSelectedLang, t, onNavigate }) => {
                     { name: 'Apple Pay', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg' },
                     { name: 'Master Card', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg' },
                     { name: 'Visa', logo: visaLogo },
-                    { name: 'American Express', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg' },
+                    { name: 'American Express', iconElement: <svg viewBox="0 0 100 60" className="w-full h-full"><rect width="100" height="60" rx="10" fill="#002663"/><text x="50" y="38" fontFamily="sans-serif" fontSize="24" fontWeight="bold" fill="white" textAnchor="middle">AMEX</text></svg> },
                     { name: 'US Bank Transfer', icon: Landmark },
                     { name: 'Panama Bank Transfer', icon: Landmark },
-                    { name: 'USDT / USDC', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=024' },
-                    { name: 'BTC', logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=024' },
-                    { name: 'ETH', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png?v=024' }
+                    { name: 'USDT / USDC', iconElement: <svg viewBox="0 0 32 32" className="w-full h-full"><path d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32Z" fill="#26A17B"/><path d="M17.279 13.911V10.155H22.428V6.262H9.571V10.155H14.72V13.911C10.749 14.075 7.643 14.883 7.643 15.856C7.643 16.829 10.749 17.636 14.72 17.801V26.393H17.279V17.801C21.25 17.636 24.357 16.829 24.357 15.856C24.357 14.883 21.25 14.075 17.279 13.911ZM15.999 16.516C12.871 16.516 10.22 15.969 9.873 15.267H9.872C10.22 14.565 12.871 14.018 15.999 14.018C19.127 14.018 21.778 14.565 22.126 15.267H22.127C21.779 15.969 19.128 16.516 15.999 16.516Z" fill="white"/></svg> },
+                    { name: 'BTC', iconElement: <svg viewBox="0 0 32 32" className="w-full h-full"><path d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32Z" fill="#F7931A"/><path d="M21.78 15.37C22.61 14.81 23.18 13.9 23.3 12.5C23.51 10.05 21.64 9.17 18.88 8.87V5.51H17.2V8.67H15.65V5.51H13.97V8.58C13.97 8.58 12.01 8.58 11.96 8.58V9.89C12.58 9.93 12.92 10.22 12.92 10.74V19.34C12.92 19.86 12.54 20.19 11.96 20.21V21.52H13.97V24.68H15.65V21.57H17.2V24.68H18.88V21.52C22.42 21.36 24.47 20.25 24.23 17.51C24.08 16.03 23.12 15.54 21.78 15.37ZM15.65 11.1H18.06C19.87 11.1 20.45 11.89 20.29 12.83C20.08 14.07 18.99 14.56 17.43 14.56H15.65V11.1ZM18.42 19.1H15.65V15.56H18.59C20.47 15.56 21.32 16.27 21.16 17.51C20.94 19.06 19.87 19.1 18.42 19.1Z" fill="white"/></svg> },
+                    { name: 'ETH', iconElement: <svg viewBox="0 0 32 32" className="w-full h-full"><path d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32Z" fill="#627EEA"/><path d="M16.498 4V14.629L24.887 18.397L16.498 4Z" fill="#C0CBF6"/><path d="M16.498 4L8.109 18.397L16.498 14.629V4Z" fill="white"/><path d="M16.498 25.999V16.311L8.109 19.988L16.498 25.999Z" fill="white"/><path d="M16.498 25.999L24.887 19.988L16.498 16.311V25.999Z" fill="#C0CBF6"/><path d="M16.498 14.63V4L8.109 18.398L16.498 14.63Z" fill="#8197EE"/></svg> }
                   ].map((method, j) => (
                     <div key={`${i}-${j}`} className="flex flex-col items-center justify-center min-w-[100px] gap-3 group">
                       <div className="w-14 h-14 flex items-center justify-center bg-gray-50 rounded-2xl p-3 group-hover:scale-110 group-hover:bg-white group-hover:shadow-lg transition-all duration-300">
-                        {method.logo ? (
+                        {method.iconElement ? (
+                          method.iconElement
+                        ) : method.logo ? (
                           <img src={method.logo} alt={method.name} className="w-full h-full object-contain transition-all duration-300" />
                         ) : (
                           <div className="text-blue-600 transition-colors">
